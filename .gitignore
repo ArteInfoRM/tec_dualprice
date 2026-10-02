@@ -1,0 +1,6 @@
+/config*.xml
+/dist/
+/vendor/
+/node_modules/
+/.keep
+*.zip

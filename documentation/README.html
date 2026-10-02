@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>tec_dualprice - README</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>Dual tax price</h1>
+<p>A PrestaShop module by Tecnoacquisti.com® that displays the complementary VAT price on product pages and quick views:</p>
+<ul>
+<li>Main price including VAT: additional price excluding VAT.</li>
+<li>Main price excluding VAT: additional price including VAT.</li>
+</ul>
+<p>The additional amount uses PrestaShop&#039;s product pricing engine, current customer, shop, currency, address, combination, quantity, discounts, customization and ecotax. No fixed VAT percentage is assumed. Taxes disabled or hidden product prices suppress the additional price. Zero-rated products may show two identical amounts.</p>
+<h2>Compatibility</h2>
+<p>Designed for PrestaShop 1.7, 8.x and 9.x, with a PHP 5.6-compatible module entry point and separate legacy/modern currency formatting. Minimum PHP requirements otherwise follow the installed PrestaShop release. Runtime validation results are recorded under Development; the compatibility range does not mean every minor release has been tested.</p>
+<p>Classic, Warehouse and Hummingbird expose the required <code>displayProductPriceBlock</code> hook with <code>type=weight</code> and <code>hook_origin=product_sheet</code>. The block stays within the refreshed product price fragment. JavaScript places it at the bottom of the complete price block, after tax labels, delivery information and other price details. Parent themes and core files are not modified. Custom themes must expose the same hook within their price fragment and may need selector adaptation in <code>views/js/front.js</code>.</p>
+<p>This first version covers product details and quick views, not catalog cards, cart totals or checkout summaries. There are no configuration values or database tables.</p>
+<h2>Installation</h2>
+<p>Copy <code>tec_dualprice</code> into the shop&#039;s <code>modules</code> directory and install it in the back office. No configuration is required. Uninstalling removes the display hooks; product and tax data are unchanged.</p>
+<h2>Price updates and integrations</h2>
+<p>Combination, quantity and other native AJAX refreshes regenerate both prices in the same response. <code>tec_vatrates</code> saves the VAT choice then emits <code>updateProduct</code>, so its selected tax rules are applied by the native engine on refresh. The extra block is deliberately outside the tax label which <code>tec_vatrates</code> replaces.</p>
+<p>A module that changes prices through the native engine and refreshes the product needs no special integration. A module that only rewrites text in the browser must also supply the complementary amount: the displayed gross amount alone cannot identify a changed tax rate, an exemption or differently taxed ecotax. The observer hides an outdated additional amount instead of guessing a tax calculation.</p>
+<p>Browser integrations can dispatch a bubbling <code>tecDualPrice:update</code> CustomEvent from the relevant <code>.js-product-prices</code> element after changing the primary price. Its <code>detail.price</code> must contain the complementary price already calculated and formatted by that integration. The module inserts this as plain text, never HTML. Tax-mode changes require a full product refresh to regenerate the correct label. Prefer PrestaShop&#039;s <code>updateProduct</code> event whenever possible.</p>
+<p>The browser receives only a product ID and the visible formatted price/label, not the full product payload. DOM mutations are batched into an animation frame; no polling or additional price endpoint is used.</p>
+<h2>Development</h2>
+<p>Run PHP syntax checks and <code>node --check views/js/front.js</code>. Run the standalone behavior checks with <code>php tests/price-hook.php</code> and <code>node tests/browser.cjs</code> (the latter uses Playwright supplied by the workspace, not shipped with the module).</p>
+<p>Development checks on 2026-10-02: source installation and rendering on PrestaShop 9.0 (Classic) and 9.1 (Warehouse); real <code>tec_vatrates</code> selection from 22% to 4% (23.33 EUR to 19.88 EUR gross, 19.12 EUR net unchanged); combination refresh after the VAT change. Standalone tests cover both tax display modes, quantity discounts, zero tax, invalid input, browser placement, quick-view insertion and the browser integration event. The entry point also passed syntax checking in the PrestaShop 1.7.8 container; PrestaShop 8.2 (Warehouse) was also checked for rendering below the complete price block and combination refresh. Full 1.7 runtime compatibility remains to be verified.</p>
+<p>Before release, verify both tax display modes, combinations with different prices, quantity discounts, zero-rated items, currency/address changes, ecotax, customizations, quick views and <code>tec_vatrates</code> selection/reset in the target shop. Installation/upgrade from a release ZIP and PrestaShop validator checks are manual owner controls; they have not been performed for version 1.0.0.</p>
+<h2>Support and license</h2>
+<p>Website: https://www.tecnoacquisti.com</p>
+<p>Support: helpdesk@tecnoacquisti.com</p>
+<p>Help center: https://help.tecnoacquisti.com</p>
+<p>Academic Free License 3.0. PrestaShop, Smarty and browser APIs are environment dependencies; no third-party runtime library is bundled.</p>
+
+</main>
+</body>
+</html>
