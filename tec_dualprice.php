@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
  *
  * @author    Tecnoacquisti.com <helpdesk@tecnoacquisti.com>
  * @copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
  * @license   https://opensource.org/licenses/MIT MIT License
+ *
  * @version   1.0.0
  */
 if (!defined('_PS_VERSION_')) {
@@ -131,7 +133,7 @@ class Tec_Dualprice extends Module
                 $this->context->currency->iso_code
             );
         } else {
-            $formatter = new \PrestaShop\PrestaShop\Adapter\Product\PriceFormatter();
+            $formatter = new PrestaShop\PrestaShop\Adapter\Product\PriceFormatter();
             $formatted = $formatter->format((float) $amount);
         }
 

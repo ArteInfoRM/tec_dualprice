@@ -4,6 +4,8 @@
 
 ### Fixed
 
+- Complete source license headers with ordered author, copyright and MIT license tags, including directory guards.
+- Apply formatter name and PHP/DocBlock spacing required by the validator coding standards.
 - Use the native price formatter adapter on PrestaShop 1.7 instead of directly calling the removed Tools::displayPrice method, avoiding the validator compatibility error on newer versions.
 
 ### Changed
