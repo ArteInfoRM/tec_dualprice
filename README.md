@@ -45,4 +45,4 @@ Support: helpdesk@tecnoacquisti.com
 
 Help center: https://help.tecnoacquisti.com
 
-Academic Free License 3.0. PrestaShop, Smarty and browser APIs are environment dependencies; no third-party runtime library is bundled.
+MIT License. See LICENSE.md for the complete license text. PrestaShop, Smarty and browser APIs are environment dependencies; no third-party runtime library is bundled.

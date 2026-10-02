@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
- * @license https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ * @license https://opensource.org/licenses/MIT MIT License
  */
 if (!defined('_PS_VERSION_')) {
     exit;

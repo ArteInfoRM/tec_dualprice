@@ -4,7 +4,7 @@
  *
  * @author    Tecnoacquisti.com <helpdesk@tecnoacquisti.com>
  * @copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
- * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ * @license   https://opensource.org/licenses/MIT MIT License
  * @version   1.0.0
  */
 if (!defined('_PS_VERSION_')) {
@@ -131,7 +131,8 @@ class Tec_Dualprice extends Module
                 $this->context->currency->iso_code
             );
         } else {
-            $formatted = Tools::displayPrice((float) $amount, $this->context->currency);
+            $formatter = new \PrestaShop\PrestaShop\Adapter\Product\PriceFormatter();
+            $formatted = $formatter->format((float) $amount);
         }
 
         $template = $this->context->smarty->createTemplate(

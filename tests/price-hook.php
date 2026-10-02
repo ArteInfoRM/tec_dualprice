@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
- * @license https://opensource.org/licenses/AFL-3.0 Academic Free License version 3.0
+ * @license https://opensource.org/licenses/MIT MIT License
  */
 if (PHP_SAPI !== 'cli') {
     exit;
@@ -117,14 +117,16 @@ class Product
     }
 }
 
-/** Legacy formatting fixture. */
-class Tools
+/** Legacy adapter fixture; the currency comes from the shop context. */
+class TestPriceFormatter
 {
-    public static function displayPrice($price, $currency)
+    public function format($price)
     {
-        return number_format($price, 2, '.', '') . ' ' . $currency->iso_code;
+        return number_format($price, 2, '.', '') . ' EUR';
     }
 }
+
+class_alias('TestPriceFormatter', 'PrestaShop\\PrestaShop\\Adapter\\Product\\PriceFormatter');
 
 require dirname(__DIR__) . '/tec_dualprice.php';
 $module = new Tec_Dualprice();

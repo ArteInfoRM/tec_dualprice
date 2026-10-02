@@ -115,6 +115,14 @@
     <div class="generated-note">Generated from the Markdown source included with the module.</div>
 <h1>Changelog</h1>
 <h2>[1.0.0] - 2026-10-02</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Use the native price formatter adapter on PrestaShop 1.7 instead of directly calling the removed Tools::displayPrice method, avoiding the validator compatibility error on newer versions.</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Change the module license from AFL-3.0 to MIT and update source headers and documentation. Rebuild version 1.0.0 with the MIT license and formatter compatibility fix.</li>
+</ul>
 <h3>Added</h3>
 <ul>
 <li>Complementary VAT price on product details and quick views.</li>

@@ -6,4 +6,4 @@ The browser script uses native DOM APIs and the PrestaShop event bus. There are 
 
 Playwright is used from the development workspace for browser tests. It is not included in the installable ZIP, and the tests directory is excluded from the archive.
 
-The module logo is supplied as a project asset. The module's license is recorded in LICENSE.md; the Academic Free License text is included there in full.
+The module logo is supplied as a project asset. The module's license is recorded in LICENSE.md; the MIT License text is included there in full.
