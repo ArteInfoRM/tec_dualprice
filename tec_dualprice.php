@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright 2026 Arte e Informatica di Loris Modena e C. s.a.s.
  *
